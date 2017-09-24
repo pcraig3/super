@@ -6,4 +6,7 @@ from flask import url_for
 class TestClass:
 
     def test_app(self):
-        assert self.client.get(url_for('views.two')).status_code == 404
+        res = self.client.get(url_for('views.json'))
+        assert res.status_code == 200
+        assert res.mimetype == 'application/json'
+        assert res.json['tasks'][0]['id'] == 1
