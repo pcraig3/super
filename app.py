@@ -1,9 +1,9 @@
-import os
+#!/usr/bin/env python
 from superapp import create_app
 
 
-PORT = os.environ.get("PORT", 8080)
-app = create_app('dev')
+app = create_app(ENVIRONMENT='dev', DEBUG=True)
+
 
 if __name__ == '__main__':
-    app.run(host="0.0.0.0", port=PORT)
+    app.run(port=8080)
