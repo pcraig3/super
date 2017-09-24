@@ -1,4 +1,6 @@
 from flask import current_app, Blueprint, jsonify
+import requests
+
 views = Blueprint('views', __name__)
 
 tasks = [
@@ -19,6 +21,11 @@ tasks = [
 @views.route('/')
 def index():
     return 'Hello 1!'
+
+@views.route('/pcraig3')
+def pcraig3():
+    res = requests.get('https://pcraig3.ca')
+    return res.text
 
 @views.route('/json')
 def json():
