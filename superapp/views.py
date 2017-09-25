@@ -3,22 +3,6 @@ import requests
 
 views = Blueprint('views', __name__)
 
-tasks = [
-    {
-        "description": "Milk, Cheese, Pizza, Fruit, Tylenol",
-        "done": False,
-        "id": 1,
-        "title": "Buy groceries"
-    },
-    {
-        "description": "Need to find a good Python tutorial on the web",
-        "done": False,
-        "id": 2,
-        "title": "Learn Python"
-    }
-]
-
-
 @views.route('/')
 def index():
     return 'env="{}"'.format(current_app.config['ENVIRONMENT'])
@@ -42,8 +26,3 @@ def openweather():
                 openweather_url, res.status_code, res.json()['message']))
 
     return jsonify(res.json())
-
-
-@views.route('/json')
-def json():
-    return jsonify({'tasks': tasks})
