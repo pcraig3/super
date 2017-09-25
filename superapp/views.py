@@ -1,7 +1,7 @@
 from flask import current_app, Blueprint, jsonify
 import requests
 
-views = Blueprint('views', __name__)
+views = Blueprint('views', __name__, url_prefix='/weather/london')
 
 
 @views.route('/')
