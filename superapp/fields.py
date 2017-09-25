@@ -13,16 +13,25 @@ class Field(object):
         self.path = path
 
     def _find(self, json):
+        """
+        Returns a value from a parsed json object
+        self.path is expected to be a colon-separated string describing the
+        path through the json to the value that we want
+        """
         _value = json
         for p in self.path.split(':'):
             try:
                 _value = _value[p]
             except TypeError:
+                # integer values refer to list items
                 _value = _value[int(p)]
 
         return _value
 
     def _transform(self, value, **kwargs):
+        """
+        This method must be overwritten in subclasses
+        """
         raise NotImplementedError('Ack, please implement')
 
     def value(self, json, **kwargs):
