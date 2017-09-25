@@ -29,4 +29,25 @@ class Field(object):
         return self._transform(self._find(json), **kwargs)
 
 
+class DescriptionField(Field):
 
+    def _transform(self, value, **kwargs):
+        return value
+
+
+class HumidityField(Field):
+
+    def _transform(self, value, **kwargs):
+        return '{}%'.format(value)
+
+
+class PressureField(Field):
+
+    def _transform(self, value, **kwargs):
+        return '{}'.format(value)
+
+
+class TemperatureField(Field):
+
+    def _transform(self, value, **kwargs):
+        return '{}{}'.format(int(value), TEMPERATURE_UNITS[kwargs['unit']])
