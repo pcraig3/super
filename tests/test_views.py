@@ -3,19 +3,6 @@ import mock
 import json
 
 
-@pytest.fixture
-def weather_fixture():
-    return {
-            'main': {
-                'humidity': 93,
-                'pressure': 1019,
-                'temp': 288.15,
-                'temp_max': 289.15,
-                'temp_min': 287.15
-            }
-        }
-
-
 @pytest.mark.usefixtures('client_class')
 class TestClass:
 
