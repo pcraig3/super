@@ -58,3 +58,13 @@ def openweather_fixture():
             "speed": 2.1
         }
     }
+
+
+@pytest.fixture
+def returned_weather_fixture():
+    return {
+        "description": "few clouds",
+        "temperature": "15C",
+        "pressure": "1028.12",
+        "humidity": "88%"
+    }
