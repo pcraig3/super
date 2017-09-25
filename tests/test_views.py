@@ -20,4 +20,4 @@ class TestClass:
         res = self.client.get('/weather/london/openweather')
         assert res.status_code == 200
         assert res.mimetype == 'application/json'
-        assert json.loads(res.data.decode('utf-8'))['main']['temp'] == 15.09
+        assert json.loads(res.data.decode('utf-8'))['temperature'] == '15C'
