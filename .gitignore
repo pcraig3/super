@@ -15,6 +15,7 @@ _mailinglist
 .idea/
 # normally this would be hidden but we care about expediency
 # config/secrets.py
+venv
 
 # Coverage reports
 htmlcov
