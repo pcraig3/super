@@ -1,0 +1,1 @@
+OPENWEATHER_KEY = '354e5f35b937cc744a82cbf1a5adadf4'
