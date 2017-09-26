@@ -27,6 +27,17 @@ def test_pressure_field(openweather_fixture):
     assert f.value(openweather_fixture) == '1022.21'
 
 
+@pytest.mark.parametrize("original,expected", [
+    (30, '30C'),
+    (30.01, '31C'),
+    (30.5, '31C'),
+    (30.99, '31C')
+])
+def test_temperature_field_rounding(original, expected, openweather_fixture):
+    f = TemperatureField('main:temp')
+    assert f._transform(original, unit='celcius') == expected
+
+
 def test_temperature_field(openweather_fixture):
     f = TemperatureField('main:temp')
-    assert f.value(openweather_fixture, unit='metric') == '15C'
+    assert f.value(openweather_fixture, unit='metric') == '16C'

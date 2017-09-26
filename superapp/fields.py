@@ -1,3 +1,6 @@
+import math
+
+
 TEMPERATURE_UNITS = {
     'metric': 'C',
     'celcius': 'C',
@@ -59,4 +62,6 @@ class PressureField(Field):
 class TemperatureField(Field):
 
     def _transform(self, value, **kwargs):
-        return '{}{}'.format(int(value), TEMPERATURE_UNITS[kwargs['unit']])
+        return '{}{}'.format(
+            math.ceil(value), TEMPERATURE_UNITS[kwargs['unit']]
+        )
