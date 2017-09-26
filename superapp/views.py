@@ -2,15 +2,33 @@ import requests
 
 from flask import current_app, Blueprint, jsonify
 from .fields import (
-    DescriptionField, HumidityField, PressureField, TemperatureField
-    )
+    DescriptionField,
+    HumidityField,
+    PressureField,
+    TemperatureField,
+    TEMPERATURE_UNITS
+)
+from .errors import APIError
+
 
 views = Blueprint('views', __name__, url_prefix='/weather/london')
+
+
+@views.errorhandler(APIError)
+def handle_invalid_usage(error):
+    response = jsonify(error.to_dict())
+    response.status_code = error.status_code
+    return response
 
 
 @views.route('/')
 def index():
     return 'env="{}"'.format(current_app.config['ENVIRONMENT'])
+
+
+@views.route('/error')
+def foo():
+    raise APIError('This view is gone', status_code=410)
 
 
 @views.route('/openweather')
