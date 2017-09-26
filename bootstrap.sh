@@ -14,5 +14,3 @@ fi
 venv/bin/pip install "pip>=8.0"
 
 venv/bin/pip install -r requirements.txt
-
-. ./venv/bin/activate
