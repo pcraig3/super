@@ -70,9 +70,20 @@ def weather(date_param, time_param, key=None):
     # okay, so at this point we have a good response
     _json = res.json()
 
-    return jsonify({
+    result = {
         'description':  DescriptionField('weather:0:description').value(_json),
         'temperature':  TemperatureField('main:temp').value(_json, unit=unit),
         'pressure':     PressureField('main:pressure').value(_json),
         'humidity':     HumidityField('main:humidity').value(_json)
-    })
+    }
+
+    if key:
+        if key not in result.keys():
+            raise APIError(
+                '\'{}\' is not a permitted key. Valid keys are \'{}\''.format(
+                    key, '\', \''.join(result.keys())
+                ), status_code=400)
+
+        result = {key: result[key]}
+
+    return jsonify(result)
