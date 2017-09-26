@@ -2,7 +2,7 @@
 from superapp import create_app
 
 
-app = create_app(ENVIRONMENT='dev', DEBUG=True)
+app = create_app(ENVIRONMENT='prod')
 
 
 if __name__ == '__main__':

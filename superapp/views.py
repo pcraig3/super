@@ -13,7 +13,7 @@ from .fields import (
 from .errors import APIError
 
 
-views = Blueprint('views', __name__, url_prefix='/weather/london')
+views = Blueprint('views', __name__)
 
 
 @views.errorhandler(APIError)
@@ -25,11 +25,20 @@ def handle_invalid_usage(error):
 
 @views.route('/')
 def index():
-    return 'env="{}"'.format(current_app.config['ENVIRONMENT'])
+    url1 = 'http://localhost:8080/weather/london/' \
+        '20170926/0300?unit=kelvin'
+
+    url2 = 'http://localhost:8080/weather/london/' \
+        '20170926/0300/pressure?unit=metric'
+
+    return '<p>welcome to my super weather api!</p>'\
+        '<p>try these urls: ' \
+        '<ul><li><a href="{0}">{0}</a></li>' \
+        '<li><a href="{1}">{1}</a></li></ul>'.format(url1, url2)
 
 
-@views.route('/<date_param>/<time_param>')
-@views.route('/<date_param>/<time_param>/<key>')
+@views.route('/weather/london/<date_param>/<time_param>')
+@views.route('/weather/london/<date_param>/<time_param>/<key>')
 def weather(date_param, time_param, key=None):
 
     # parse the date and the time. throw an error if the format is bad

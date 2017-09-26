@@ -7,10 +7,10 @@ import json
 class TestClass:
 
     def test_index(self):
-        res = self.client.get('/weather/london/')
+        res = self.client.get('/')
         assert res.status_code == 200
         assert res.mimetype == 'text/html'
-        assert res.data.decode('utf-8') == 'env="test"'
+        assert "welcome to my super weather api" in res.data.decode('utf-8')
 
     @mock.patch('superapp.views.requests')
     def test_weather(
