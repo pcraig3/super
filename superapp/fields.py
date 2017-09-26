@@ -1,12 +1,27 @@
 import math
 
 
+# would make sense to merge these two dicts but this way is a cleaner syntax
 TEMPERATURE_UNITS = {
-    'metric': 'C',
-    'celcius': 'C',
-    'kelvin': 'K',
-    'fahrenheit': 'F',
-    'imperial': 'F'
+    'metric':       'C',
+    'celcius':      'C',
+    'c':            'C',
+    'kelvin':       'K',
+    'k':            'K',
+    'fahrenheit':   'F',
+    'f':            'F',
+    'imperial':     'F'
+}
+
+OPENWEATHER_UNIT_TRANSLATIONS = {
+    'metric':       'metric',
+    'celcius':      'metric',
+    'c':            'metric',
+    'kelvin':       'kelvin',
+    'k':            'kelvin',
+    'fahrenheit':   'imperial',
+    'f':            'imperial',
+    'imperial':     'imperial'
 }
 
 

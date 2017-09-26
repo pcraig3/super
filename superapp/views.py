@@ -1,12 +1,13 @@
 import requests
 
-from flask import current_app, Blueprint, jsonify
+from flask import current_app, Blueprint, jsonify, request
 from .fields import (
     DescriptionField,
     HumidityField,
     PressureField,
     TemperatureField,
-    TEMPERATURE_UNITS
+    TEMPERATURE_UNITS,
+    OPENWEATHER_UNIT_TRANSLATIONS
 )
 from .errors import APIError
 
@@ -26,14 +27,16 @@ def index():
     return 'env="{}"'.format(current_app.config['ENVIRONMENT'])
 
 
-@views.route('/error')
-def foo():
-    raise APIError('This view is gone', status_code=410)
-
-
 @views.route('/openweather')
 def openweather():
-    unit = 'metric'
+
+    unit = request.args.get('unit', 'celcius')
+    if unit not in TEMPERATURE_UNITS.keys():
+        raise APIError(
+            '\'{}\' is not a permitted unit. Valid units are \'{}\''.format(
+                unit, '\', \''.join(TEMPERATURE_UNITS.keys())
+            ), status_code=400)
+
     openweather_url = '''
         http://api.openweathermap.org/data/2.5/weather?q=London,uk
         '''
@@ -41,17 +44,12 @@ def openweather():
     res = requests.get('{}&appid={}&units={}'.format(
         openweather_url,
         current_app.config['OPENWEATHER_KEY'],
-        unit
+        OPENWEATHER_UNIT_TRANSLATIONS[unit]
     ))
 
     # if the status code doesn't start with a "2"
     if int('{}'.format(res.status_code)[:1]) != 2:
-        raise ValueError(
-            '''
-            GET request for "{}" returned a status code of "{}".
-            Message: "{}"
-            '''.format(
-                openweather_url, res.status_code, res.json()['message']))
+        raise APIError(res.json()['message'], status_code=res.status_code)
 
     # okay, so at this point we have a good response
     _json = res.json()
