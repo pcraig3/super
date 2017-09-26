@@ -61,10 +61,10 @@ def openweather_fixture():
 
 
 @pytest.fixture
-def returned_weather_fixture():
+def expected_fixture():
     return {
-        "description": "few clouds",
-        "temperature": "15C",
-        "pressure": "1028.12",
-        "humidity": "88%"
+        "description": "haze",
+        "temperature": "16C",
+        "pressure": "1022.21",
+        "humidity": "82%"
     }
