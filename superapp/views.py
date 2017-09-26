@@ -1,5 +1,6 @@
 import requests
 
+from datetime import datetime, timezone
 from flask import current_app, Blueprint, jsonify, request
 from .fields import (
     DescriptionField,
@@ -27,8 +28,23 @@ def index():
     return 'env="{}"'.format(current_app.config['ENVIRONMENT'])
 
 
-@views.route('/openweather')
-def openweather():
+@views.route('/<date_param>/<time_param>')
+@views.route('/<date_param>/<time_param>/<key>')
+def weather(date_param, time_param, key=None):
+
+    # parse the date and the time. throw an error if the format is bad
+    try:
+        date_param = datetime.strptime(date_param, "%Y%m%d").date()
+        time_param = datetime.strptime(time_param, "%H%M").time()
+    except ValueError as e:
+        raise APIError(e.args[0], status_code=400)
+
+    # combine date and time into start variable, which is a timestamp
+    start = datetime.combine(
+        date_param, time_param
+    ).replace(
+        tzinfo=timezone.utc
+    ).timestamp()
 
     unit = request.args.get('unit', 'celcius')
     if unit not in TEMPERATURE_UNITS.keys():

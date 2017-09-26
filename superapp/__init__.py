@@ -1,5 +1,4 @@
 from flask import Flask
-from .errors import APIError
 
 
 def create_app(**config_overrides):
